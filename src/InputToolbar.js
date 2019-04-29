@@ -1,16 +1,33 @@
 /* eslint no-use-before-define: ["error", { "variables": false }] */
 
-import PropTypes from 'prop-types';
-import React from 'react';
-import { StyleSheet, View, Keyboard, ViewPropTypes } from 'react-native';
+import PropTypes from "prop-types";
+import React from "react";
+import {
+  StyleSheet,
+  View,
+  Keyboard,
+  ViewPropTypes,
+  Dimensions
+} from "react-native";
 
-import Composer from './Composer';
-import Send from './Send';
-import Actions from './Actions';
-import Color from './Color';
+import Composer from "./Composer";
+import Send from "./Send";
+import Actions from "./Actions";
+import Color from "./Color";
+
+const isIphoneX = () => {
+  let dimen = Dimensions.get("window");
+  return (
+    Platform.OS === "ios" &&
+    !Platform.isPad &&
+    !Platform.isTVOS &&
+    (dimen.height === 812 ||
+      dimen.width === 812 ||
+      (dimen.height === 896 || dimen.width === 896))
+  );
+};
 
 export default class InputToolbar extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -18,13 +35,20 @@ export default class InputToolbar extends React.Component {
     this.keyboardWillHide = this.keyboardWillHide.bind(this);
 
     this.state = {
-      position: 'absolute',
+      position: "absolute",
+      bottom: 0
     };
   }
 
   componentWillMount() {
-    this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
-    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
+    this.keyboardWillShowListener = Keyboard.addListener(
+      "keyboardWillShow",
+      this.keyboardWillShow
+    );
+    this.keyboardWillHideListener = Keyboard.addListener(
+      "keyboardWillHide",
+      this.keyboardWillHide
+    );
   }
 
   componentWillUnmount() {
@@ -33,17 +57,24 @@ export default class InputToolbar extends React.Component {
   }
 
   keyboardWillShow() {
-    if (this.state.position !== 'relative') {
+    if (this.state.position !== "relative") {
       this.setState({
-        position: 'relative',
+        position: "relative"
       });
+
+      if (isIphoneX) {
+        this.setState({
+          bottom: -78
+        });
+      }
     }
   }
 
   keyboardWillHide() {
-    if (this.state.position !== 'absolute') {
+    if (this.state.position !== "absolute") {
       this.setState({
-        position: 'absolute',
+        position: "absolute",
+        bottom: 0
       });
     }
   }
@@ -75,7 +106,9 @@ export default class InputToolbar extends React.Component {
   renderAccessory() {
     if (this.props.renderAccessory) {
       return (
-        <View style={[styles.accessory, this.props.accessoryStyle]}>{this.props.renderAccessory(this.props)}</View>
+        <View style={[styles.accessory, this.props.accessoryStyle]}>
+          {this.props.renderAccessory(this.props)}
+        </View>
       );
     }
     return null;
@@ -83,7 +116,13 @@ export default class InputToolbar extends React.Component {
 
   render() {
     return (
-      <View style={[styles.container, this.props.containerStyle, { position: this.state.position }]}>
+      <View
+        style={[
+          styles.container,
+          this.props.containerStyle,
+          { position: this.state.position, bottom: this.state.bottom }
+        ]}
+      >
         <View style={[styles.primary, this.props.primaryStyle]}>
           {this.renderActions()}
           {this.renderComposer()}
@@ -93,7 +132,6 @@ export default class InputToolbar extends React.Component {
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -103,15 +141,15 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white,
     bottom: 0,
     left: 0,
-    right: 0,
+    right: 0
   },
   primary: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
+    flexDirection: "row",
+    alignItems: "flex-end"
   },
   accessory: {
-    height: 44,
-  },
+    height: 44
+  }
 });
 
 InputToolbar.defaultProps = {
@@ -122,7 +160,7 @@ InputToolbar.defaultProps = {
   containerStyle: {},
   primaryStyle: {},
   accessoryStyle: {},
-  onPressActionButton: () => {},
+  onPressActionButton: () => {}
 };
 
 InputToolbar.propTypes = {
@@ -133,5 +171,5 @@ InputToolbar.propTypes = {
   onPressActionButton: PropTypes.func,
   containerStyle: ViewPropTypes.style,
   primaryStyle: ViewPropTypes.style,
-  accessoryStyle: ViewPropTypes.style,
+  accessoryStyle: ViewPropTypes.style
 };
