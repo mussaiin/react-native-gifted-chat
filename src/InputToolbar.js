@@ -7,25 +7,14 @@ import {
   View,
   Keyboard,
   ViewPropTypes,
-  Dimensions
+  Dimensions,
+  Platform
 } from "react-native";
 
 import Composer from "./Composer";
 import Send from "./Send";
 import Actions from "./Actions";
 import Color from "./Color";
-
-const isIphoneX = () => {
-  let dimen = Dimensions.get("window");
-  return (
-    Platform.OS === "ios" &&
-    !Platform.isPad &&
-    !Platform.isTVOS &&
-    (dimen.height === 812 ||
-      dimen.width === 812 ||
-      (dimen.height === 896 || dimen.width === 896))
-  );
-};
 
 export default class InputToolbar extends React.Component {
   constructor(props) {
@@ -56,27 +45,36 @@ export default class InputToolbar extends React.Component {
     this.keyboardWillHideListener.remove();
   }
 
-  keyboardWillShow() {
-    if (this.state.position !== "relative") {
-      this.setState({
-        position: "relative"
-      });
+  keyboardWillShow(e) {
+    let heightValue;
 
-      if (isIphoneX) {
-        this.setState({
-          bottom: -78
-        });
-      }
+    if (
+      Platform.OS === "ios" &&
+      (Dimensions.get("window").height >= 812 ||
+        Dimensions.get("window").width >= 812)
+    ) {
+      heightValue = 44 + 34;
+    } else if (
+      Platform.OS === "ios" &&
+      (Dimensions.get("window").height <= 812 ||
+        Dimensions.get("window").width <= 812)
+    ) {
+      heightValue = 44;
+    }
+
+    if (Platform.OS === "ios") {
+      this.setState({
+        bottom:
+          (e.endCoordinates ? e.endCoordinates.height : e.end.height) -
+          heightValue
+      });
     }
   }
 
   keyboardWillHide() {
-    if (this.state.position !== "absolute") {
-      this.setState({
-        position: "absolute",
-        bottom: 0
-      });
-    }
+    this.setState({
+      bottom: 0
+    });
   }
 
   renderActions() {
@@ -119,7 +117,6 @@ export default class InputToolbar extends React.Component {
       <View
         style={[
           styles.container,
-          this.props.containerStyle,
           { position: this.state.position, bottom: this.state.bottom }
         ]}
       >
@@ -141,11 +138,21 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white,
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    height: 80
   },
   primary: {
     flexDirection: "row",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    backgroundColor: "#F6F6F6",
+    marginLeft: 31,
+    marginRight: 41,
+    marginTop: 16,
+    height: 48,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#EDEDED",
+    paddingLeft: 31
   },
   accessory: {
     height: 44
