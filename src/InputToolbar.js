@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     borderWidth: 1,
     borderColor: "#EDEDED",
-    paddingLeft: 31
+    paddingLeft: 11
   },
   accessory: {
     height: 44
