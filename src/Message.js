@@ -1,39 +1,38 @@
 /* eslint react-native/no-inline-styles: 0 */
 
-import PropTypes from 'prop-types';
-import React from 'react';
-import { View, ViewPropTypes, StyleSheet } from 'react-native';
+import PropTypes from "prop-types";
+import React from "react";
+import { View, ViewPropTypes, StyleSheet } from "react-native";
 
-import Avatar from './Avatar';
-import Bubble from './Bubble';
-import SystemMessage from './SystemMessage';
-import Day from './Day';
+import Avatar from "./Avatar";
+import Bubble from "./Bubble";
+import SystemMessage from "./SystemMessage";
+import Day from "./Day";
 
-import { isSameUser, isSameDay } from './utils';
+import { isSameUser, isSameDay } from "./utils";
 
 const styles = {
   left: StyleSheet.create({
     container: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      justifyContent: 'flex-start',
+      flexDirection: "row",
+      alignItems: "flex-end",
+      justifyContent: "flex-start",
       marginLeft: 8,
-      marginRight: 0,
-    },
+      marginRight: 0
+    }
   }),
   right: StyleSheet.create({
     container: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      justifyContent: 'flex-end',
+      flexDirection: "row",
+      alignItems: "flex-end",
+      justifyContent: "flex-end",
       marginLeft: 0,
-      marginRight: 8,
-    },
-  }),
+      marginRight: 8
+    }
+  })
 };
 
 export default class Message extends React.Component {
-
   shouldComponentUpdate(nextProps) {
     const next = nextProps.currentMessage;
     const current = this.props.currentMessage;
@@ -57,7 +56,7 @@ export default class Message extends React.Component {
     return {
       ...props,
       isSameUser,
-      isSameDay,
+      isSameDay
     };
   };
 
@@ -89,7 +88,10 @@ export default class Message extends React.Component {
   }
 
   renderAvatar() {
-    if (this.props.user._id === this.props.currentMessage.user._id && !this.props.showUserAvatar) {
+    if (
+      this.props.user._id === this.props.currentMessage.user._id &&
+      !this.props.showUserAvatar
+    ) {
       return null;
     }
     const avatarProps = this.getInnerComponentProps();
@@ -101,7 +103,10 @@ export default class Message extends React.Component {
   }
 
   render() {
-    const sameUser = isSameUser(this.props.currentMessage, this.props.nextMessage);
+    const sameUser = isSameUser(
+      this.props.currentMessage,
+      this.props.nextMessage
+    );
     return (
       <View>
         {this.renderDay()}
@@ -113,18 +118,17 @@ export default class Message extends React.Component {
               styles[this.props.position].container,
               { marginBottom: sameUser ? 2 : 10 },
               !this.props.inverted && { marginBottom: 2 },
-              this.props.containerStyle[this.props.position],
+              this.props.containerStyle[this.props.position]
             ]}
           >
-            {this.props.position === 'left' ? this.renderAvatar() : null}
+            {this.props.position === "left" ? this.renderAvatar() : null}
             {this.renderBubble()}
-            {this.props.position === 'right' ? this.renderAvatar() : null}
+            {this.props.position === "right" ? this.renderAvatar() : null}
           </View>
         )}
       </View>
     );
   }
-
 }
 
 Message.defaultProps = {
@@ -132,14 +136,14 @@ Message.defaultProps = {
   renderBubble: null,
   renderDay: null,
   renderSystemMessage: null,
-  position: 'left',
+  position: "left",
   currentMessage: {},
   nextMessage: {},
   previousMessage: {},
   user: {},
   containerStyle: {},
   showUserAvatar: true,
-  inverted: true,
+  inverted: true
 };
 
 Message.propTypes = {
@@ -148,7 +152,7 @@ Message.propTypes = {
   renderBubble: PropTypes.func,
   renderDay: PropTypes.func,
   renderSystemMessage: PropTypes.func,
-  position: PropTypes.oneOf(['left', 'right']),
+  position: PropTypes.oneOf(["left", "right"]),
   currentMessage: PropTypes.object,
   nextMessage: PropTypes.object,
   previousMessage: PropTypes.object,
@@ -156,6 +160,6 @@ Message.propTypes = {
   inverted: PropTypes.bool,
   containerStyle: PropTypes.shape({
     left: ViewPropTypes.style,
-    right: ViewPropTypes.style,
-  }),
+    right: ViewPropTypes.style
+  })
 };
