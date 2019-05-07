@@ -76,6 +76,39 @@ export default class Bubble extends React.Component {
     return null;
   }
 
+  renderReplyMessageText() {
+    const { currentMessage, user } = this.props;
+    const { replyMessage } = currentMessage;
+
+    const isUserMessageOwner =
+      currentMessage.user._id === user._id ? true : false;
+
+    if (!replyMessage) {
+      return;
+    }
+
+    return (
+      <View style={styles.replyMessageContainer}>
+        <View
+          style={[
+            styles.replyMessageBorder,
+            { backgroundColor: isUserMessageOwner ? "white" : "#2F75EC" }
+          ]}
+        />
+        <Text
+          style={[
+            styles.replyMessageTitle,
+            { color: isUserMessageOwner ? "white" : "black" }
+          ]}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {replyMessage}
+        </Text>
+      </View>
+    );
+  }
+
   renderMessageText() {
     if (this.props.currentMessage.text) {
       const { containerStyle, wrapperStyle, ...messageTextProps } = this.props;
@@ -281,6 +314,7 @@ export default class Bubble extends React.Component {
               {this.renderCustomView()}
               {this.renderMessageImage()}
               {this.renderMessageVideo()}
+              {this.renderReplyMessageText()}
               {this.renderMessageText()}
               {this.renderResponseText()}
             </View>
@@ -357,6 +391,21 @@ const styles = {
   usernameView: {
     flexDirection: "row",
     marginHorizontal: 10
+  },
+  replyMessageContainer: {
+    flexDirection: "row",
+    paddingLeft: 10,
+    marginVertical: 5,
+    paddingRight: 16,
+    alignItems: "center"
+  },
+  replyMessageBorder: {
+    height: 30,
+    width: 3
+  },
+  replyMessageTitle: {
+    paddingLeft: 8,
+    fontSize: 16
   }
 };
 
