@@ -19,7 +19,7 @@ export default class LoadEarlier extends React.Component {
     if (this.props.isLoadingEarlier === false) {
       return (
         <Text style={[styles.text, this.props.textStyle]}>
-          {this.props.label}
+          Загрузить предыдущие сообщения
         </Text>
       );
     }
@@ -48,7 +48,7 @@ export default class LoadEarlier extends React.Component {
         disabled={this.props.isLoadingEarlier === true}
         accessibilityTraits="button"
       >
-        <View style={[styles.wrapper, this.props.wrapperStyle]}>
+        <View style={[styles.wrapper, this.props.wrapperStyle, { backgroundColor: "#0347BA" }]}>
           {this.renderLoading()}
         </View>
       </TouchableOpacity>
