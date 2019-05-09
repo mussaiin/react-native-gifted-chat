@@ -48,7 +48,7 @@ export default class LoadEarlier extends React.Component {
         disabled={this.props.isLoadingEarlier === true}
         accessibilityTraits="button"
       >
-        <View style={[styles.wrapper, this.props.wrapperStyle, { backgroundColor: "#0347BA" }]}>
+        <View style={[styles.wrapper, this.props.wrapperStyle, { backgroundColor: "#397FD2" }]}>
           {this.renderLoading()}
         </View>
       </TouchableOpacity>
