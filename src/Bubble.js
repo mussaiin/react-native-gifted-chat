@@ -258,7 +258,7 @@ export default class Bubble extends React.Component {
         }}
         style={{
           flexDirection: "row",
-          paddingLeft: 12,
+          paddingHorizontal: 12,
           alignItems: "center",
           marginTop: 8
         }}
