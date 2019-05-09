@@ -1,14 +1,13 @@
 /* eslint no-use-before-define: ["error", { "variables": false }] */
 
-import PropTypes from 'prop-types';
-import React from 'react';
-import { Platform, StyleSheet, TextInput } from 'react-native';
+import PropTypes from "prop-types";
+import React, { Fragment } from "react";
+import { Platform, StyleSheet, TextInput, View, Text } from "react-native";
 
-import { MIN_COMPOSER_HEIGHT, DEFAULT_PLACEHOLDER } from './Constant';
-import Color from './Color';
+import { MIN_COMPOSER_HEIGHT, DEFAULT_PLACEHOLDER } from "./Constant";
+import Color from "./Color";
 
 export default class Composer extends React.Component {
-
   onContentSizeChange(e) {
     const { contentSize } = e.nativeEvent;
 
@@ -38,10 +37,14 @@ export default class Composer extends React.Component {
         placeholder={this.props.placeholder}
         placeholderTextColor={this.props.placeholderTextColor}
         multiline={this.props.multiline}
-        onChange={(e) => this.onContentSizeChange(e)}
-        onContentSizeChange={(e) => this.onContentSizeChange(e)}
-        onChangeText={(text) => this.onChangeText(text)}
-        style={[styles.textInput, this.props.textInputStyle, { height: this.props.composerHeight }]}
+        onChange={e => this.onContentSizeChange(e)}
+        onContentSizeChange={e => this.onContentSizeChange(e)}
+        onChangeText={text => this.onChangeText(text)}
+        style={[
+          styles.textInput,
+          this.props.textInputStyle,
+          { height: this.props.composerHeight }
+        ]}
         autoFocus={this.props.textInputAutoFocus}
         value={this.props.text}
         enablesReturnKeyAutomatically
@@ -51,7 +54,6 @@ export default class Composer extends React.Component {
       />
     );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -62,27 +64,27 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     marginTop: Platform.select({
       ios: 6,
-      android: 0,
+      android: 0
     }),
     marginBottom: Platform.select({
       ios: 5,
-      android: 3,
-    }),
-  },
+      android: 3
+    })
+  }
 });
 
 Composer.defaultProps = {
   composerHeight: MIN_COMPOSER_HEIGHT,
-  text: '',
+  text: "",
   placeholderTextColor: Color.defaultProps,
   placeholder: DEFAULT_PLACEHOLDER,
   textInputProps: null,
   multiline: true,
   textInputStyle: {},
   textInputAutoFocus: false,
-  keyboardAppearance: 'default',
+  keyboardAppearance: "default",
   onTextChanged: () => {},
-  onInputSizeChanged: () => {},
+  onInputSizeChanged: () => {}
 };
 
 Composer.propTypes = {
@@ -96,5 +98,5 @@ Composer.propTypes = {
   multiline: PropTypes.bool,
   textInputStyle: TextInput.propTypes.style,
   textInputAutoFocus: PropTypes.bool,
-  keyboardAppearance: PropTypes.string,
+  keyboardAppearance: PropTypes.string
 };
