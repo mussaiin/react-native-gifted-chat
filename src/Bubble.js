@@ -245,7 +245,7 @@ export default class Bubble extends React.Component {
             source={require("./assests/reply/white-Reply.png")}
             style={{ width: 16, height: 14 }}
           />
-          <Text style={[{ color: "#FFFFFF99", fontSize: 12, marginLeft: 8 }]}>
+          <Text style={[{ color: "#FFFFFF99", fontSize: 12, marginHorizontal: 8 }]}>
             ответить
           </Text>
         </TouchableOpacity>
