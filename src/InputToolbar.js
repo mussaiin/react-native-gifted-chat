@@ -156,7 +156,7 @@ export default class InputToolbar extends React.Component {
               }}
             >
               <Image
-                source={require("./assests/Cross.png")}
+                source={require("./assests/cross/Cross.png")}
                 style={{ width: 16, height: 16, marginTop: 6 }}
               />
             </TouchableOpacity>
