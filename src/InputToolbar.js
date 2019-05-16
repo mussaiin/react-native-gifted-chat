@@ -77,6 +77,10 @@ export default class InputToolbar extends React.Component {
     }
 
     if (Platform.OS === "ios") {
+      console.log(
+        (e.endCoordinates ? e.endCoordinates.height : e.end.height) -
+          heightValue
+      );
       this.setState({
         bottom:
           (e.endCoordinates ? e.endCoordinates.height : e.end.height) -
