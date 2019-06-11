@@ -239,7 +239,7 @@ class GiftedChat extends React.Component {
    */
   getBasicMessagesContainerHeight(composerHeight = this.state.composerHeight) {
     return (
-      this.getMaxHeight() - 80
+      this.getMaxHeight() - 55
       // this.getMaxHeight() - this.calculateInputToolbarHeight(composerHeight)
     );
   }
@@ -497,6 +497,7 @@ class GiftedChat extends React.Component {
   }
 
   renderInputToolbar() {
+    console.log(this.props)
     const inputToolbarProps = {
       ...this.props,
       text: this.getTextFromProp(this.state.text),

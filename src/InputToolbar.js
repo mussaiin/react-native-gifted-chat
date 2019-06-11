@@ -29,13 +29,19 @@ export default class InputToolbar extends React.Component {
     this.state = {
       position: "absolute",
       bottom: 0,
-      height: 80
+      height: 45
     };
+  }
+
+  updateTextFieldSize = (height) => {
+    this.setState({
+      height: this.state.height+30
+    });
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.renderResponder1 !== prevProps.renderResponder1) {
-      const toolbarHeight = this.props.renderResponder1 ? 100 : 80;
+      const toolbarHeight = this.props.renderResponder1 ? 70 : 45;
 
       this.setState({
         height: toolbarHeight
@@ -142,7 +148,7 @@ export default class InputToolbar extends React.Component {
         >
           <View style={{ flex: 8 }}>
             <Text
-              style={{ paddingTop: 8, color: "grey", fontWeight: "500" }}
+              style={{ paddingTop: 8, color: "grey", fontWeight: "500", fontSize: 13 }}
               numberOfLines={1}
             >
               Ответить: {this.props.renderResponder1}
@@ -161,7 +167,7 @@ export default class InputToolbar extends React.Component {
             >
               <Image
                 source={require("./assests/cross/Cross.png")}
-                style={{ width: 16, height: 16, marginTop: 6 }}
+                style={{ width: 12, height: 12, marginTop: 6 }}
               />
             </TouchableOpacity>
           </View>
@@ -188,8 +194,8 @@ export default class InputToolbar extends React.Component {
         <View style={[styles.primary, this.props.primaryStyle]}>
           {this.renderActions()}
           {this.renderComposer()}
-          {this.renderSend()}
         </View>
+        {this.renderSend()}
         {this.renderAccessory()}
       </View>
     );
@@ -203,24 +209,24 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white,
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
   },
   primary: {
     flexDirection: "row",
     alignItems: "flex-end",
+    justifyContent: "center",
     backgroundColor: "#F6F6F6",
-    marginLeft: 31,
-    marginRight: 41,
-    marginTop: 16,
-    height: 48,
-    borderRadius: 6,
+    marginLeft: 20,
+    marginRight: 40,
+    marginTop: 8,
+    height: 30,
+    borderRadius: 15,
     borderWidth: 1,
     borderColor: "#EDEDED",
-    paddingLeft: 13,
-    paddingRight: 40
+    paddingLeft: 5,
   },
   accessory: {
-    height: 44
+    height: 45
   }
 });
 
