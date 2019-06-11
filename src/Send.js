@@ -34,13 +34,13 @@ export default function Send({
           containerStyle,
           {
             position: "absolute",
-            width: 48,
-            height: 48,
-            backgroundColor: "#0347BA",
-            borderRadius: 24,
-            right: -14,
-            top: -1,
-            bottom: 1,
+            width: 30,
+            height: 30,
+            backgroundColor: "#2F75EC",
+            borderRadius: 15,
+            right: 5,
+            top: 5,
+            bottom: 5,
             justifyContent: "center",
             alignItems: "center"
           }
@@ -65,7 +65,7 @@ export default function Send({
 
 const styles = StyleSheet.create({
   container: {
-    height: 44,
+    height: 30,
     justifyContent: "flex-end"
   },
   text: {
@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   image: {
-    width: 21,
-    height: 19
+    width: 15,
+    height: 14
   }
 });
 
