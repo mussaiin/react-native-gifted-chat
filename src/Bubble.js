@@ -78,7 +78,7 @@ export default class Bubble extends React.Component {
 
   renderReplyMessageText() {
     const { currentMessage, user } = this.props;
-    const { replyMessage } = currentMessage;
+    const { replyMessage, replyName } = currentMessage;
 
     const isUserMessageOwner =
       currentMessage.user._id === user._id ? true : false;
@@ -92,19 +92,30 @@ export default class Bubble extends React.Component {
         <View
           style={[
             styles.replyMessageBorder,
-            { backgroundColor: isUserMessageOwner ? "white" : "#2F75EC" }
+            { backgroundColor: isUserMessageOwner ? "white" : "#2F75EC", }
           ]}
         />
+        <View style = {{flex: 1, flexDirection: "column"}}>
         <Text
-          style={[
-            styles.replyMessageTitle,
-            { color: isUserMessageOwner ? "white" : "black" }
-          ]}
-          numberOfLines={1}
-          ellipsizeMode="tail"
+              style={[
+                  styles.replyMessageAuthor, { color: isUserMessageOwner ? "white" : "black" }
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+          {replyName}
+        </Text>
+
+        <Text
+            style={[
+                styles.replyMessageTitle,
+                { color: isUserMessageOwner ? "white" : "black" }]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
         >
           {replyMessage}
         </Text>
+        </View>
       </View>
     );
   }
@@ -189,15 +200,7 @@ export default class Bubble extends React.Component {
       if (currentMessage.user._id === this.props.user._id) {
         return (
           <View style={styles.usernameView}>
-            <Text
-              style={[
-                styles.username,
-                this.props.usernameStyle,
-                { color: "white", fontSize: 14, fontWeight: "bold" }
-              ]}
-            >
-              Вы
-            </Text>
+
           </View>
         );
       }
@@ -235,15 +238,15 @@ export default class Bubble extends React.Component {
             responseToMessage(this.props.currentMessage);
           }}
           style={{
-            flexDirection: "row",
-            paddingLeft: 12,
-            alignItems: "center",
-            marginTop: 8
+                flexDirection: "row",
+                paddingHorizontal: 12,
+                alignItems: "center",
           }}
+          hitSlop={{top: 5, bottom: 15, left: 5, right: 5}}
         >
           <Image
             source={require("./assests/reply/white-Reply.png")}
-            style={{ width: 16, height: 14 }}
+            style={{ width: 12, height: 10 }}
           />
           <Text style={[{ color: "#FFFFFF99", fontSize: 12, marginHorizontal: 8 }]}>
             ответить
@@ -260,12 +263,12 @@ export default class Bubble extends React.Component {
           flexDirection: "row",
           paddingHorizontal: 12,
           alignItems: "center",
-          marginTop: 8
         }}
+        hitSlop={{top: 5, bottom: 15, left: 5, right: 5}}
       >
         <Image
           source={require("./assests/reply/Reply.png")}
-          style={{ width: 16, height: 14 }}
+          style={{ width: 12, height: 10 }}
         />
         <Text style={[{ color: "#ACACAC66", fontSize: 12, marginHorizontal: 8 }]}>
           ответить
@@ -301,14 +304,13 @@ export default class Bubble extends React.Component {
                   styles[this.props.position].bottom,
                   this.props.bottomContainerStyle[this.props.position],
                   {
-                    paddingTop: 14,
+                    paddingTop: 10,
                     alignItems: "center",
                     justifyContent: "space-between"
                   }
                 ]}
               >
                 {this.renderUsername()}
-                {this.renderTime()}
                 {/* {this.renderTicks()} */}
               </View>
               {this.renderCustomView()}
@@ -316,8 +318,20 @@ export default class Bubble extends React.Component {
               {this.renderMessageVideo()}
               {this.renderReplyMessageText()}
               {this.renderMessageText()}
-              {this.renderResponseText()}
-            </View>
+              <View
+                style={[
+                    styles[this.props.position].bottom,
+                  this.props.bottomContainerStyle[this.props.position],
+                  {
+                    alignItems: "center",
+                    justifyContent: "space-between"
+                  }
+              ]}
+              >
+                {this.renderResponseText()}
+                {this.renderTime()}
+              </View>
+              </View>
           </TouchableWithoutFeedback>
         </View>
       </View>
@@ -382,9 +396,9 @@ const styles = {
     marginRight: 10
   },
   username: {
-    top: -3,
+    top: -5,
     left: 0,
-    fontSize: 12,
+    fontSize: 14,
     backgroundColor: "transparent",
     color: "#aaa"
   },
@@ -394,8 +408,8 @@ const styles = {
   },
   replyMessageContainer: {
     flexDirection: "row",
+    marginTop: 2,
     paddingLeft: 10,
-    marginVertical: 5,
     paddingRight: 16,
     alignItems: "center"
   },
@@ -403,9 +417,14 @@ const styles = {
     height: 30,
     width: 3
   },
+  replyMessageAuthor: {
+    paddingLeft: 8,
+    fontSize: 14,
+    fontWeight: "500",
+  },
   replyMessageTitle: {
     paddingLeft: 8,
-    fontSize: 16
+    fontSize: 14
   }
 };
 
