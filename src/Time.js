@@ -32,7 +32,7 @@ export default function Time(
       >
         {moment(currentMessage.createdAt)
           .locale(context.getLocale())
-          .format(timeFormat)}
+          .format("HH:mm")}
       </Text>
     </View>
   );
@@ -41,7 +41,7 @@ export default function Time(
 const containerStyle = {
   marginLeft: 10,
   marginRight: 10,
-  marginBottom: 5
+  marginBottom: 0
 };
 
 const textStyle = {
