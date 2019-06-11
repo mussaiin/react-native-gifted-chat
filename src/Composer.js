@@ -8,12 +8,17 @@ import { MIN_COMPOSER_HEIGHT, DEFAULT_PLACEHOLDER } from "./Constant";
 import Color from "./Color";
 
 export default class Composer extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      height: 30
+    }
+  }
+
   onContentSizeChange(e) {
     const { contentSize } = e.nativeEvent;
-
     // Support earlier versions of React Native on Android.
     if (!contentSize) return;
-
     if (
       !this.contentSize ||
       this.contentSize.width !== contentSize.width ||
@@ -44,7 +49,7 @@ export default class Composer extends React.Component {
         style={[
           styles.textInput,
           this.props.textInputStyle,
-          { height: 40, paddingTop: 10 }
+          {height: this.state.height}
         ]}
         autoFocus={this.props.textInputAutoFocus}
         value={this.props.text}
@@ -61,8 +66,9 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     marginLeft: 10,
-    fontSize: 18,
-    lineHeight: 18,
+    top: 6,
+    fontSize: 14,
+    lineHeight: 15,
     marginTop: Platform.select({
       ios: 6,
       android: 0
