@@ -29,20 +29,14 @@ export default class InputToolbar extends React.Component {
     this.state = {
       position: "absolute",
       bottom: 0,
-      height: 45
+      height: 45,
+      size: 0
     };
-  }
-
-  updateTextFieldSize = (height) => {
-    this.setState({
-      height: this.state.height+30
-    });
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.renderResponder1 !== prevProps.renderResponder1) {
       const toolbarHeight = this.props.renderResponder1 ? 70 : 45;
-
       this.setState({
         height: toolbarHeight
       });
@@ -121,8 +115,7 @@ export default class InputToolbar extends React.Component {
     if (this.props.renderComposer) {
       return this.props.renderComposer(this.props);
     }
-
-    return <Composer {...this.props} />;
+    return <Composer sendData={this.getData} {...this.props} />
   }
 
   renderAccessory() {
@@ -191,11 +184,11 @@ export default class InputToolbar extends React.Component {
         ]}
       >
         {this.renderResponder()}
-        <View style={[styles.primary, this.props.primaryStyle]}>
-          {this.renderActions()}
+        {this.renderActions()}
+        <View>
           {this.renderComposer()}
+          {this.renderSend()}
         </View>
-        {this.renderSend()}
         {this.renderAccessory()}
       </View>
     );
@@ -210,20 +203,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-  },
-  primary: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "center",
-    backgroundColor: "#F6F6F6",
-    marginLeft: 20,
-    marginRight: 40,
-    marginTop: 8,
-    height: 30,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: "#EDEDED",
-    paddingLeft: 5,
   },
   accessory: {
     height: 45

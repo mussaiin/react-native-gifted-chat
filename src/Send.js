@@ -38,9 +38,8 @@ export default function Send({
             height: 30,
             backgroundColor: "#2F75EC",
             borderRadius: 15,
-            right: 5,
-            top: 5,
-            bottom: 5,
+            right: 15,
+            bottom: 8,
             justifyContent: "center",
             alignItems: "center"
           }

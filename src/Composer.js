@@ -11,22 +11,31 @@ export default class Composer extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      height: 30
+      textInputHeight: 30,
+      textFieldHeight: 40,
+      contentSize: 30
     }
   }
 
-  onContentSizeChange(e) {
-    const { contentSize } = e.nativeEvent;
-    // Support earlier versions of React Native on Android.
-    if (!contentSize) return;
-    if (
-      !this.contentSize ||
-      this.contentSize.width !== contentSize.width ||
-      this.contentSize.height !== contentSize.height
-    ) {
-      this.contentSize = contentSize;
-      this.props.onInputSizeChanged(this.contentSize);
-    }
+   onContentSizeChange(e) {
+      const {contentSize} = e.nativeEvent;
+      // Support earlier versions of React Native on Android.
+      if (!contentSize) return;
+      if (
+        !this.contentSize ||
+        this.contentSize.width !== contentSize.width ||
+        this.contentSize.height !== contentSize.height
+      ) {
+        this.contentSize = contentSize;
+        this.setState({
+          textInputHeight: this.contentSize.height,
+          textFieldHeight: this.contentSize.height + 10,
+          contentSize: this.contentSize.height
+        });
+      }
+  }
+
+  componentDidUpdate(){
   }
 
   onChangeText(text) {
@@ -35,29 +44,31 @@ export default class Composer extends React.Component {
 
   render() {
     return (
-      <TextInput
-        testID={this.props.placeholder}
-        accessible
-        accessibilityLabel={this.props.placeholder}
-        placeholder={this.props.placeholder}
-        placeholderTextColor={this.props.placeholderTextColor}
-        multiline={this.props.multiline}
-        secureTextEntry={false}
-        onChange={e => this.onContentSizeChange(e)}
-        onContentSizeChange={e => this.onContentSizeChange(e)}
-        onChangeText={text => this.onChangeText(text)}
-        style={[
-          styles.textInput,
-          this.props.textInputStyle,
-          {height: this.state.height}
-        ]}
-        autoFocus={this.props.textInputAutoFocus}
-        value={this.props.text}
-        enablesReturnKeyAutomatically
-        underlineColorAndroid="transparent"
-        keyboardAppearance={this.props.keyboardAppearance}
-        {...this.props.textInputProps}
-      />
+      <View style={[styles.primary, {height: this.state.textFieldHeight}]}>
+        <TextInput
+          testID={this.props.placeholder}
+          accessible
+          accessibilityLabel={this.props.placeholder}
+          placeholder={this.props.placeholder}
+          placeholderTextColor={this.props.placeholderTextColor}
+          multiline={this.props.multiline}
+          secureTextEntry={false}
+          onChange={e => this.onContentSizeChange(e)}
+          onContentSizeChange={e => this.onContentSizeChange(e)}
+          onChangeText={text => this.onChangeText(text)}
+          style={[
+            styles.textInput,
+            this.props.textInputStyle,
+            {height: this.state.textInputHeight}
+          ]}
+          autoFocus={this.props.textInputAutoFocus}
+          value={this.props.text}
+          enablesReturnKeyAutomatically
+          underlineColorAndroid="transparent"
+          keyboardAppearance={this.props.keyboardAppearance}
+          {...this.props.textInputProps}
+        />
+      </View>
     );
   }
 }
@@ -65,19 +76,26 @@ export default class Composer extends React.Component {
 const styles = StyleSheet.create({
   textInput: {
     flex: 1,
-    marginLeft: 10,
-    top: 6,
     fontSize: 14,
-    lineHeight: 15,
-    marginTop: Platform.select({
-      ios: 6,
-      android: 0
-    }),
-    marginBottom: Platform.select({
-      ios: 5,
-      android: 0
-    })
-  }
+    lineHeight: 20,
+    padding: 0,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    flex: 1,
+    justifyContent: "center",
+  },
+  primary: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    backgroundColor: "#F6F6F6",
+    marginLeft: 20,
+    marginRight: 60,
+    marginVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#EDEDED",
+  },
 });
 
 Composer.defaultProps = {
