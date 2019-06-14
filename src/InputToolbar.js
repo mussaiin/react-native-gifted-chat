@@ -29,14 +29,14 @@ export default class InputToolbar extends React.Component {
     this.state = {
       position: "absolute",
       bottom: 0,
-      height: 45,
+      height: this.props.minInputToolbarHeight,
       size: 0
     };
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.renderResponder1 !== prevProps.renderResponder1) {
-      const toolbarHeight = this.props.renderResponder1 ? 70 : 45;
+      const toolbarHeight = this.props.renderResponder1 ? 104 : 80;
       this.setState({
         height: toolbarHeight
       });
@@ -61,13 +61,12 @@ export default class InputToolbar extends React.Component {
 
   keyboardWillShow(e) {
     let heightValue;
-
     if (
       Platform.OS === "ios" &&
       (Dimensions.get("window").height >= 812 ||
         Dimensions.get("window").width >= 812)
     ) {
-      heightValue = 44 + 34;
+      heightValue = 44 + 25;
     } else if (
       Platform.OS === "ios" &&
       (Dimensions.get("window").height <= 812 ||
@@ -77,14 +76,12 @@ export default class InputToolbar extends React.Component {
     }
 
     if (Platform.OS === "ios") {
-      console.log(
-        (e.endCoordinates ? e.endCoordinates.height : e.end.height) -
-          heightValue
-      );
+      // console.log(
+      //   (e.endCoordinates ? e.endCoordinates.height : e.end.height) - heightValue
+      // );
       this.setState({
         bottom:
-          (e.endCoordinates ? e.endCoordinates.height : e.end.height) -
-          heightValue
+          (e.endCoordinates ? e.endCoordinates.height : e.end.height) - heightValue
       });
     }
   }
@@ -115,7 +112,7 @@ export default class InputToolbar extends React.Component {
     if (this.props.renderComposer) {
       return this.props.renderComposer(this.props);
     }
-    return <Composer sendData={this.getData} {...this.props} />
+    return <Composer {...this.props} />
   }
 
   renderAccessory() {

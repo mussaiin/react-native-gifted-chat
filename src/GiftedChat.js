@@ -173,7 +173,7 @@ class GiftedChat extends React.Component {
   }
 
   setKeyboardHeight(height) {
-    console.log("height", height);
+    // console.log("height", height);
     this._keyboardHeight = height;
   }
 
@@ -239,7 +239,7 @@ class GiftedChat extends React.Component {
    */
   getBasicMessagesContainerHeight(composerHeight = this.state.composerHeight) {
     return (
-      this.getMaxHeight() - 55
+      this.getMaxHeight() - this.props.minInputToolbarHeight
       // this.getMaxHeight() - this.calculateInputToolbarHeight(composerHeight)
     );
   }
@@ -255,26 +255,23 @@ class GiftedChat extends React.Component {
       (Dimensions.get("window").height >= 812 ||
         Dimensions.get("window").width >= 812)
     ) {
-      console.log("1");
+      // console.log("1");
       return (
         this.getBasicMessagesContainerHeight(composerHeight) -
-        this.getKeyboardHeight() +
-        34 +
-        44
+        this.getKeyboardHeight() + 25 + 45
       );
     } else if (
       Platform.OS === "ios" &&
       (Dimensions.get("window").height <= 812 ||
         Dimensions.get("window").width <= 812)
     ) {
-      console.log("2 das");
+      // console.log("2 das");
       return (
         this.getBasicMessagesContainerHeight(composerHeight) -
-        this.getKeyboardHeight() +
-        34
+        this.getKeyboardHeight() + 45
       );
     } else {
-      console.log("3");
+      // console.log("3");
       return (
         this.getBasicMessagesContainerHeight(composerHeight) -
         this.getKeyboardHeight() +
@@ -497,7 +494,6 @@ class GiftedChat extends React.Component {
   }
 
   renderInputToolbar() {
-    console.log(this.props)
     const inputToolbarProps = {
       ...this.props,
       text: this.getTextFromProp(this.state.text),

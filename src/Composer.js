@@ -10,13 +10,7 @@ import Color from "./Color";
 export default class Composer extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      textInputHeight: 30,
-      textFieldHeight: 40,
-      contentSize: 30
-    }
   }
-
    onContentSizeChange(e) {
       const {contentSize} = e.nativeEvent;
       // Support earlier versions of React Native on Android.
@@ -27,14 +21,13 @@ export default class Composer extends React.Component {
         this.contentSize.height !== contentSize.height
       ) {
         this.contentSize = contentSize;
-        this.setState({
-          textInputHeight: this.contentSize.height,
-          textFieldHeight: this.contentSize.height + 10,
-          contentSize: this.contentSize.height
-        });
+        // this.setState({
+        //   textInputHeight: this.contentSize.height,
+        //   textFieldHeight: this.contentSize.height + 10,
+        // });
+        this.props.onInputSizeChanged(this.contentSize);
       }
   }
-
   componentDidUpdate(){
   }
 
@@ -44,7 +37,7 @@ export default class Composer extends React.Component {
 
   render() {
     return (
-      <View style={[styles.primary, {height: this.state.textFieldHeight}]}>
+      <View style={[styles.primary]}>
         <TextInput
           testID={this.props.placeholder}
           accessible
@@ -59,7 +52,7 @@ export default class Composer extends React.Component {
           style={[
             styles.textInput,
             this.props.textInputStyle,
-            {height: this.state.textInputHeight}
+            {height: this.props.minComposerHeight}
           ]}
           autoFocus={this.props.textInputAutoFocus}
           value={this.props.text}
