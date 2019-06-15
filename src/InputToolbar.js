@@ -11,7 +11,7 @@ import {
   Platform,
   Text,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 
 import Composer from "./Composer";
@@ -36,7 +36,7 @@ export default class InputToolbar extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.renderResponder1 !== prevProps.renderResponder1) {
-      const toolbarHeight = this.props.renderResponder1 ? 104 : 80;
+      const toolbarHeight = this.props.renderResponder1 ? this.props.minInputToolbarHeight + (Platform.OS=='ios' ? 24 : 26) : this.props.minInputToolbarHeight;
       this.setState({
         height: toolbarHeight
       });
