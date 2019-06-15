@@ -36,10 +36,18 @@ export default class InputToolbar extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.renderResponder1 !== prevProps.renderResponder1) {
-      const toolbarHeight = this.props.renderResponder1 ? this.props.minInputToolbarHeight + (Platform.OS=='ios' ? 24 : 26) : this.props.minInputToolbarHeight;
-      this.setState({
-        height: toolbarHeight
-      });
+        if(prevProps.renderResponder1==null) {
+          const toolbarHeight = this.props.renderResponder1 ? this.state.height + (Platform.OS == 'ios' ? 24 : 26) : this.state.height - (Platform.OS == 'ios' ? 24 : 26);
+          this.setState({
+            height: toolbarHeight
+          });
+        }
+        else{
+          const toolbarHeight = this.props.renderResponder1 ? this.state.height : this.state.height - (Platform.OS == 'ios' ? 24 : 26);
+          this.setState({
+            height: toolbarHeight
+          });
+        }
     }
   }
 
@@ -108,11 +116,16 @@ export default class InputToolbar extends React.Component {
     return <Send {...this.props} />;
   }
 
+  handleComposerSizeChange(size) {
+    // console.log("😀", { size });
+    this.setState({ height: size.height + (this.props.renderResponder1 ? 45 : 20) });
+  }
+
   renderComposer() {
     if (this.props.renderComposer) {
       return this.props.renderComposer(this.props);
     }
-    return <Composer {...this.props} />
+    return <Composer {...this.props} handleComposerSizeChange={(size) => this.handleComposerSizeChange(size)} />
   }
 
   renderAccessory() {
