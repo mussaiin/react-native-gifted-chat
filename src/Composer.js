@@ -25,8 +25,10 @@ export default class Composer extends React.Component {
         this.contentSize.height !== contentSize.height
       ) {
         this.contentSize = contentSize;
-        this.setState({ height: contentSize.height })
-        this.props.handleComposerSizeChange(contentSize);
+        if(contentSize.height<80){
+          this.setState({ height: contentSize.height })
+          this.props.handleComposerSizeChange(contentSize);
+        }
       }
   }
   componentDidUpdate(){
