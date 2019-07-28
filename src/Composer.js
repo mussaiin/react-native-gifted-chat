@@ -10,7 +10,6 @@ import Color from "./Color";
 export default class Composer extends React.Component {
   constructor (props) {
     super(props);
-
     this.state = {
       height: 20
     }
@@ -37,7 +36,6 @@ export default class Composer extends React.Component {
   onChangeText(text) {
     this.props.onTextChanged(text);
   }
-
   render() {
     return (
       <View style={[styles.primary]}>
@@ -57,6 +55,7 @@ export default class Composer extends React.Component {
             this.props.textInputStyle,
             { height: this.state.height }
           ]}
+          ref={textInput => this.textInput = textInput}
           autoFocus={this.props.textInputAutoFocus}
           value={this.props.text}
           enablesReturnKeyAutomatically
