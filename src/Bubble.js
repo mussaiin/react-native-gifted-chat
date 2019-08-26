@@ -24,13 +24,15 @@ import { isSameUser, isSameDay } from "./utils";
 
 export default class Bubble extends React.Component {
     onLongPress = () => {
+        const { responseToMessage } = this.props;
         if (this.props.onLongPress) {
             this.props.onLongPress(this.context, this.props.currentMessage);
         } else if (this.props.currentMessage.text) {
             const options =
-                this.props.optionTitles.length > 0
-                    ? this.props.optionTitles.slice(0, 2)
-                    : ["Скопировать", "Отмена"];
+                // this.props.optionTitles.length > 0
+                //     ? this.props.optionTitles.slice(0, 2)
+                //     :
+                ["Ответить", "Скопировать", "Отмена"];
             const cancelButtonIndex = options.length - 1;
             this.context.actionSheet().showActionSheetWithOptions(
                 {
@@ -40,6 +42,9 @@ export default class Bubble extends React.Component {
                 buttonIndex => {
                     switch (buttonIndex) {
                         case 0:
+                            responseToMessage(this.props.currentMessage);
+                            break;
+                        case 1:
                             Clipboard.setString(this.props.currentMessage.text);
                             break;
                         default:
@@ -367,12 +372,11 @@ export default class Bubble extends React.Component {
                                         this.props.position
                                     ],
                                     {
-                                        alignItems: "center",
-                                        justifyContent: "space-between"
+                                        justifyContent: "flex-end"
                                     }
                                 ]}
                             >
-                                {this.renderResponseText()}
+                                {/* {this.renderResponseText()} */}
                                 {this.renderTime()}
                             </View>
                         </View>
