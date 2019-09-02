@@ -32,7 +32,7 @@ export default class Bubble extends React.Component {
                 // this.props.optionTitles.length > 0
                 //     ? this.props.optionTitles.slice(0, 2)
                 //     :
-                ["Ответить", "Скопировать", "Отмена"];
+                ["Ответить", "Скопировать", "Пожаловаться", "Отмена"];
             const cancelButtonIndex = options.length - 1;
             this.context.actionSheet().showActionSheetWithOptions(
                 {
@@ -46,6 +46,9 @@ export default class Bubble extends React.Component {
                             break;
                         case 1:
                             Clipboard.setString(this.props.currentMessage.text);
+                            break;
+                        case 2:
+                            this.props.onComplyPress(this.props.currentMessage);
                             break;
                         default:
                             break;
