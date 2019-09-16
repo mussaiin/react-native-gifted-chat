@@ -159,6 +159,7 @@ export default class InputToolbar extends React.Component {
                 <View
                     style={{
                         paddingLeft: 30,
+                        paddingRight: 15,
                         flexDirection: "row",
                         alignItems: "center"
                     }}
@@ -189,7 +190,11 @@ export default class InputToolbar extends React.Component {
                         >
                             <Image
                                 source={require("./assests/cross/Cross.png")}
-                                style={{ width: 12, height: 12, marginTop: 6 }}
+                                style={{
+                                    width: 12,
+                                    height: 12,
+                                    marginTop: 6
+                                }}
                             />
                         </TouchableOpacity>
                     </View>
