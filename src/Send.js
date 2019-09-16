@@ -33,13 +33,13 @@ export default function Send({
                     styles.container,
                     containerStyle,
                     {
-                        position: "absolute",
                         width: 30,
                         height: 30,
-                        backgroundColor: "#00246B",
                         borderRadius: 15,
+                        backgroundColor: "#00246B",
+                        position: "absolute",
                         right: 15,
-                        bottom: 8,
+                        bottom: 4,
                         justifyContent: "center",
                         alignItems: "center"
                     }
