@@ -400,6 +400,7 @@ const styles = {
             borderRadius: 15,
             backgroundColor: "#B5B5B51A",
             marginRight: 60,
+            minWidth: 150,
             minHeight: 20,
             justifyContent: "flex-end"
         },
@@ -423,6 +424,7 @@ const styles = {
             borderRadius: 15,
             backgroundColor: "#00246B",
             marginLeft: 60,
+            minWidth: 150,
             minHeight: 20,
             justifyContent: "flex-end"
         },
